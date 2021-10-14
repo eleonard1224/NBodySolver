@@ -53,5 +53,6 @@ int main(void) {
     // }
     // cout << endl;
 
-    Mat img = create_image(posR, N, 0, 5.0f, 5.0f, 512, 512);
+    create_video(posR, N, nt, 5.0f, 5.0f, 512, 512, "test.avi");
+    // Mat img = create_image(posR, N, 0, 5.0f, 5.0f, 512, 512);
 }

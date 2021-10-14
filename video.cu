@@ -1,6 +1,34 @@
 // Implementation of video calls
 #include "video.h"
 
+void create_video(float *posR, int N, int nt, float W, float H, int pixel_width, int pixel_height, string video_name) {
+
+    vector<Mat> images;
+    int it;
+    Mat img, res;
+    // int ex = static_cast<int>(inputVideo.get(CAP_PROP_FOURCC))
+    for (it = 0; it < nt; it++) {
+        img = create_image(posR, N, it, W, H, pixel_width, pixel_height);        
+        images.push_back(img);
+    }
+
+    Size S(pixel_width,pixel_height);    
+
+    VideoWriter outputVideo;  // Open the output
+    outputVideo.open("/home/rick/Documents/Syllabus/CUDA/NBody/test2.avi", 0, 30, S, true);  //30 for 30 fps
+
+    if (!outputVideo.isOpened()){
+        cout  << "Could not open the output video for write: "<< endl;
+        return;
+    }
+
+    for(int i=0; i<images.size(); i++){
+        outputVideo << images[i];
+    }
+
+    cout << "Finished writing" << endl;
+}
+
 Mat create_image(float *posR, int N, int it, float W, float H, int pixel_width, int pixel_height) {
 
     int i;
