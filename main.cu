@@ -2,6 +2,7 @@
 #include <iostream>
 #include <math.h>
 #include "nbody.h"
+#include "video.h"
 
 int main(void) {
 
@@ -51,4 +52,6 @@ int main(void) {
     //     cout << posR[i] << " ";
     // }
     // cout << endl;
+
+    Mat img = create_image(posR, N, 0, 5.0f, 5.0f, 512, 512);
 }
