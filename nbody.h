@@ -15,7 +15,7 @@ __device__ void calculate_forces(void *devX, void *devV, void *devA, float4 *glo
 __device__ float3 bodyBodyInteraction(float4 bi, float4 bj, float3 ai);
 __device__ float3 tile_calculation(float4 myPosition, float3 accel);
 __device__ inline float4& operator +=(float4& a, const float4& b);
-__device__ inline float4& operator *(float4& a, const float& b);
+__device__ inline float4 operator *(const float4& a, const float& b);
 __device__ inline float4 operator +(const float4& a, const float4& b);
 
 #endif

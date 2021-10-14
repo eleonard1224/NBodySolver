@@ -31,8 +31,17 @@ __device__ void calculate_forces(void *devX, void *devV, void *devA, float4 *glo
     }
     float4 acc4 = {acc.x, acc.y, acc.z, 0.0f};   
     globalA[gtid] = acc4; 
-    float4 displacement = globalX[gtid] + globalV[gtid]*dt + globalA[gtid]*dt*0.5;
-    globalX[gtid] = globalX[gtid] + globalV[gtid]*dt + globalA[gtid]*dt*0.5;
+    // float4 displacement = globalX[gtid] + globalV[gtid]*dt + globalA[gtid]*dt*0.5f;
+    globalX[gtid] = globalX[gtid] + globalV[gtid]*dt + globalA[gtid]*dt*0.5f;
+    // Begin Testing
+    if(gtid == 0) {
+        // printf("acc4.x = %f\n", acc4.x);
+        // printf("acc.x = %f\n", acc.x);
+        printf("globalA[gtid].x = %f\n", globalA[gtid].x);
+        printf("globalX[gtid].x = %f\n", globalX[gtid].x);
+    }
+    __syncthreads();
+    // End Testing
     globalV[gtid] += (acc4*dt); 
     globalR[N*it+gtid] = globalX[gtid];
 } 
@@ -43,15 +52,29 @@ __device__ float3 tile_calculation(float4 myPosition, float3 accel) {
     extern __shared__ float4 shPosition[];    
     for (i = 0; i < blockDim.x; i++) {     
         accel = bodyBodyInteraction(myPosition, shPosition[i], accel);   
-    }   
+    }
+    // // Begin Testing
+    // int gtid = blockIdx.x * blockDim.x + threadIdx.x;  
+    // if(gtid == 0) {
+    //     printf("accel.x = %f\n", accel.x);
+    // }
+    // __syncthreads();
+    // // End Testing   
     return accel; 
 } 
 
 __device__ float3 bodyBodyInteraction(float4 bi, float4 bj, float3 ai) {   
 
     float3 r;   
-    // r_ij  [3 FLOPS]   
+    // r_ij  [3 FLOPS]  
     r.x = bj.x - bi.x;   r.y = bj.y - bi.y;   r.z = bj.z - bi.z; 
+    // // Begin Testing
+    // int gtid = blockIdx.x * blockDim.x + threadIdx.x;  
+    // if(gtid == 0) {
+    //     printf("r.x = %f\n", r.x);
+    // }
+    // __syncthreads();
+    // // End Testing
     // distSqr = dot(r_ij, r_ij) + EPS^2  [6 FLOPS]    
     float distSqr = r.x * r.x + r.y * r.y + r.z * r.z + EPS2;   
     // invDistCube =1/distSqr^(3/2)  [4 FLOPS (2 mul, 1 sqrt, 1 inv)]    
@@ -79,10 +102,11 @@ __device__ inline float4 operator +(const float4& a, const float4& b) {
     return c;
 }
 
-__device__ inline float4& operator *(float4& a, const float& b) {
-    a.x = b*a.x;
-    a.y = b*a.y;
-    a.z = b*a.z;
-    a.w = b*a.w;
-    return a;
+__device__ inline float4 operator *(const float4& a, const float& b) {
+    float4 c;
+    c.x = b*a.x;
+    c.y = b*a.y;
+    c.z = b*a.z;
+    c.w = b*a.w;
+    return c;
 }
