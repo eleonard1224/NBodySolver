@@ -15,7 +15,9 @@ void create_video(float *posR, int N, int nt, float W, float H, int pixel_width,
     Size S(pixel_width,pixel_height);    
 
     VideoWriter outputVideo;  // Open the output
-    outputVideo.open("/home/rick/Documents/Syllabus/CUDA/NBody/test2.avi", 0, 30, S, true);  //30 for 30 fps
+    // outputVideo.open("/home/rick/Documents/Syllabus/CUDA/NBody/test2.avi", 0, 30, S, true);  //30 for 30 fps
+    int fourcc = VideoWriter::fourcc('m', 'p', '4', 'v');
+    outputVideo.open("test2.mp4", fourcc, 30, S, true);  //30 for 30 fps
 
     if (!outputVideo.isOpened()){
         cout  << "Could not open the output video for write: "<< endl;
