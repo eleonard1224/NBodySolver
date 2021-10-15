@@ -9,7 +9,7 @@ int main(void) {
     int N = 4; // Number of particles
     float *devX, *devV, *devA; // Arrays which hold positions, velocities, and accelerations of particles
     float *posR; // posR has 4*N_particles*N_time_steps entries - stores the locations of the particles over all the timesteps
-    int nt = 100; // Number of time steps
+    int nt = 160; // Number of time steps
     float dt = 0.1f; // Time step size
 
     // Allocate Unified Memory – accessible from CPU or GPU
