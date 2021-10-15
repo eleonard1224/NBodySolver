@@ -6,6 +6,7 @@
 #include <math.h>
 #include <cuda.h>
 #include <cuda_runtime.h>
+#include <cooperative_groups.h>
 using namespace std;
 
 #define EPS2 1.0e-5

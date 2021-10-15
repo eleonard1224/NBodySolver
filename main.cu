@@ -33,8 +33,6 @@ int main(void) {
     devX[8] = c2; devX[9] = c2; devX[11] = 1.0f; // Particle # 3
     devX[12] = c1; devX[13] = c2; devX[15] = 1.0f; // Particle # 4
     // Copy over initial positions of particles to posR
-    // posR[0] = devX[0]; posR[1] = devX[1]; posR[2] = devX[2];
-    // posR[4] = devX[4]; posR[5] = devX[5]; posR[6] = devX[6];
     for(i = 0; i < 4*N; i += 4) {
         for(j = 0; j < 3; j++) {
             posR[i+j] = devX[i+j];
@@ -45,19 +43,6 @@ int main(void) {
     calculate_positions<<<N, 2, N*sizeof(float4)>>>(devX, devV, devA, posR, N, 1, nt, dt); 
     cudaDeviceSynchronize();
 
-    // // Print-outs for testing purposes
-    // cout << "Accelerations" << endl;
-    // for (int i = 0; i < 4*N; i++) {
-    //     cout << devA[i] << " ";
-    // }
-    // cout << endl;
-
-    // cout << "Positions" << endl;
-    // for (int i = 0; i < 4*N*nt; i++) {
-    //     cout << posR[i] << " ";
-    // }
-    // cout << endl;
-
+    // Create video
     create_video(posR, N, nt, 20.0f, 20.0f, 512, 512, "test.avi");
-    // Mat img = create_image(posR, N, 0, 5.0f, 5.0f, 512, 512);
 }

@@ -15,7 +15,6 @@ using namespace cv;
 using namespace std;
 
 void create_video(float *posR, int N, int nt, float W, float H, int pixel_width, int pixel_height, string video_name);
-
 Mat create_image(float *posR, int N, int it, float W, float H, int pixel_width, int pixel_height);
 
 #endif
