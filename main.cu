@@ -40,7 +40,7 @@ int main(void) {
     }
 
     // Run the function on using the GPU.
-    calculate_positions<<<N, 2, N*sizeof(float4)>>>(devX, devV, devA, posR, N, 1, nt, dt); 
+    calculate_positions<<<1, N, N*sizeof(float4)>>>(devX, devV, devA, posR, N, 1, nt, dt);  
     cudaDeviceSynchronize();
 
     // Create video

@@ -33,7 +33,6 @@ __device__ void calculate_forces(void *devX, void *devV, void *devA, float4 *glo
     globalX[gtid] = globalX[gtid] + globalV[gtid]*dt + globalA[gtid]*dt*0.5f;
     globalV[gtid] += (acc4*dt); 
     globalR[N*it+gtid] = globalX[gtid];
-    printf("\n");
 } 
 
 __device__ float3 tile_calculation(float4 myPosition, float3 accel) {   
